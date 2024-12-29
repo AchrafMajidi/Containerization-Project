@@ -2,48 +2,7 @@ version: '3.8'
 
 services:
 
-  registry-server:
-    image: registry:2.8.2
-    restart: always
-    environment:
-      REGISTRY_HTTP_HEADERS_Access-Control-Allow-Origin: '[http://localhost]'
-      REGISTRY_HTTP_HEADERS_Access-Control-Allow-Methods: '[HEAD,GET,OPTIONS,DELETE]'
-      REGISTRY_HTTP_HEADERS_Access-Control-Allow-Credentials: '[true]'
-      REGISTRY_HTTP_HEADERS_Access-Control-Allow-Headers: '[Authorization,Accept,Cache-Control]'
-      REGISTRY_HTTP_HEADERS_Access-Control-Expose-Headers: '[Docker-Content-Digest]'
-      REGISTRY_STORAGE_DELETE_ENABLED: 'true'
-    volumes:
-      - ./registry/data:/var/lib/registry
-    networks:
-      - app_network
-    ports:
-      - "5000:5000" # Le port du registre
-    container_name: registry-server
-
-  registry-ui:
-    image: joxit/docker-registry-ui:main
-    restart: always
-    environment:
-      SINGLE_REGISTRY: "true"
-      REGISTRY_TITLE: "Docker Registry UI"
-      DELETE_IMAGES: "true"
-      SHOW_CONTENT_DIGEST: "true"
-      NGINX_PROXY_PASS_URL: "http://registry-server:5000"
-      SHOW_CATALOG_NB_TAGS: "true"
-      CATALOG_MIN_BRANCHES: "1"
-      CATALOG_MAX_BRANCHES: "1"
-      TAGLIST_PAGE_SIZE: "100"
-      REGISTRY_SECURED: "false"
-      CATALOG_ELEMENTS_LIMIT: "1000"
-    networks:
-      - app_network
-    ports:
-      - "8081:80" # Le port pour accéder à l'UI
-    container_name: registry-ui
   
-
-
-
   traefik:
     image: traefik:v2.9
     command:

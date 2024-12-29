@@ -6,12 +6,12 @@ const AjouterEtudiant = () => {
   const navigate = useNavigate();
 
   function handleAjouter() {
-    fetch('http://backend.localhost/etudiants', {
+    fetch(`http://student-app.local/etudiants`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ nom: name })
+      body: JSON.stringify({ nom: name }),
     })
     .then(response => response.text())
     .then(data => {
@@ -24,12 +24,14 @@ const AjouterEtudiant = () => {
   return (
     <div>
       <h1>Ajouter Etudiant</h1>
-      <form action="http://backend.localhost/etudiants"
-      method='POST'
-      onSubmit={(event) => {
-        event.preventDefault();
-        handleAjouter();
-      }}>
+      <form
+        action={`http://student-app.local/api/etudiants`}
+        method="POST"
+        onSubmit={(event) => {
+          event.preventDefault();
+          handleAjouter();
+        }}
+      >
         <label htmlFor="nom">Nom</label>
         <br />
         <input 

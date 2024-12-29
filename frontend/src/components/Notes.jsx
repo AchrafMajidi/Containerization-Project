@@ -14,7 +14,7 @@ const Notes = () => {
   const {id} = useParams();
 
   useEffect(() => {
-    fetch(`http://backend.localhost/etudiants/${id}/notes?page=${pageIndex}&size=5`)
+    fetch(`http://student-app.local/api/etudiants/${id}/notes?page=${pageIndex}&size=5`)
     .then(response => response.json())
     .then(data => setObj(data))
 

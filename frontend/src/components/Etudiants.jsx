@@ -15,12 +15,12 @@ const Etudiants = () => {
   const [pageIndex, setPageIndex] = useState(0);
 
   useEffect(() => {
-    fetch(`http://backend.localhost/etudiants?page=${pageIndex}&size=5`)
+    fetch(`http://student-app.local/api/etudiants?page=${pageIndex}&size=5`)
     .then(response => response.json())
     .then(async data => {
       setObj(data);
       const arrayNote = await Promise.all(data.content.map(async (etudiant) => {
-        const response = await fetch(`http://backend.localhost/etudiants/${etudiant.id}/notes?size=1000`);
+        const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/etudiants/${etudiant.id}/notes?size=1000`);
         const notesData = await response.json();
         
         if (notesData.content.length === 0) return 11;
